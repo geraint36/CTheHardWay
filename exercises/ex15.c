@@ -1,5 +1,25 @@
 #include <stdio.h>
 
+void printArrays(int arrInts[], char *arrStr[], 
+	int count)
+{
+	int i;
+	for(i = 0; i < count; i++) {
+		printf("%s has %d years alive.\n",
+				arrStr[i], arrInts[i]);
+	}
+}
+
+void printPointers(int *pointInt, char **pointStr, 
+	int count)
+{
+	int i;
+	for(i = 0; i < count; i++) {
+		printf("%s is %d years old.\n",
+				*(pointStr+i), *(pointInt+i));
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	// create two arrays we care about
@@ -11,13 +31,10 @@ int main(int argc, char *argv[])
 
 	// safely get the size of ages
 	int count = sizeof(ages) / sizeof(int);
-	int i = 0;
+	int i;
 
 	// first way using indexing
-	for(i = 0; i < count; i++) {
-		printf("%s has %d years alive.\n",
-				names[i], ages[i]);
-	}
+	printArrays(ages, names, count);
 
 	printf("---\n");
 
@@ -26,10 +43,7 @@ int main(int argc, char *argv[])
 	char **cur_name = names;
 
 	// second way using pointers
-	for(i = 0; i < count; i++) {
-		printf("%s is %d years old.\n",
-				*(cur_name+i), *(cur_age+i));
-	}
+	printPointers(cur_age, cur_name, count);
 
 	printf("---\n");
 
@@ -48,6 +62,14 @@ int main(int argc, char *argv[])
 	{
 		printf("%s lived %d years so far.\n",
 				*cur_name, *cur_age);
+	}
+
+	printf("---\n");
+
+	// prints the addresses
+	for(i=0; i<count; i++) {
+		printf("age pointer:%p names pointer:%p\n", 
+			(cur_age+i), (cur_name+i));
 	}
 
 	return 0;
